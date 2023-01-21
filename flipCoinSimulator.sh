@@ -1,28 +1,37 @@
 echo "Welcome to Flip Coin Simulation Problem"
 
-read -p "Enter the nuber of times to toss the coin: " x
 headCount=0
 tailCount=0
+totalTarget=21
+flips=0
 
-for(( i = 1; i <= x; i++ ))
+while(( 1 ))
 do
-	flip=$(( RANDOM%2 ))
-	if(( flip == 0 ))
-	then
-        	echo "Flip number $i - Head"
+	(( flips++ ))
+	echo -n "Flip number $flips is "
+        counter=$(( RANDOM%2 ))
+        if(( counter == 0 ))
+        then
+        	echo "Head"
         	(( headCount++ ))
-	else
-        	echo "Flip number $i - Tail"
+        else
+        	echo "Tail"
         	(( tailCount++ ))
-	fi
+        fi
+
+	if(( headCount == totalTarget || tailCount == totalTarget ))
+        then
+        	break
+        fi
 done
 echo "The Head count is $headCount and Tail Count is $tailCount"
+
 if(( headCount > tailCount ))
 then
-    echo "The winner is Heads"
+	echo "Head won by $(( headCount - tailCount ))"
 elif(( tailCount > headCount ))
 then
-    echo "The winner is Tails"
+	echo "Tail won by $(( tailCount - headCount ))"
 else
-    echo "There is no winner. It is a tie"
+	echo "There is no winner. Its a tie"
 fi
