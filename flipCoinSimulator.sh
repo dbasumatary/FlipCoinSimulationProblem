@@ -4,6 +4,7 @@ headCount=0
 tailCount=0
 totalTarget=21
 flips=0
+minDiff=2
 
 while(( 1 ))
 do
@@ -16,10 +17,10 @@ do
         	(( headCount++ ))
         else
         	echo "Tail"
-        	(( tailCount++ ))
-        fi
+   		(( tailCount++ ))
+	fi
 
-	if(( headCount == totalTarget || tailCount == totalTarget ))
+	if(( headCount >= totalTarget || tailCount >= totalTarget ))
         then
         	break
         fi
@@ -32,6 +33,24 @@ then
 elif(( tailCount > headCount ))
 then
 	echo "Tail won by $(( tailCount - headCount ))"
-else
-	echo "There is no winner. Its a tie"
+fi
+
+if(( headCount == tailCount ))
+then
+	while((1))
+	do
+	diff1=$(( headCount - tailCount ))
+	diff2=$(( tailCount - headCount ))
+
+	if(( headCount == totalTarget && diff1 >= minDiff ))
+    	then
+        	echo "Head won by $diff1 points"
+        	break
+
+    	elif(( tailCount == totalTarget && diff2 >= minDiff ))
+    	then
+        	echo "Tail won by $diff2 points"
+        	break
+    	fi
+	done
 fi
